@@ -33,9 +33,9 @@ namespace apiTckets.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Promoteur>> Get(int id)
         {
-            var promoteur = await  _context.Promoteurs.FindAsync(id);
+            var promoteur = await _context.Promoteurs.FindAsync(id);
 
-            if(promoteur == null)
+            if (promoteur == null)
             {
                 return NotFound();
             }
@@ -47,6 +47,15 @@ namespace apiTckets.Controllers
         [HttpPost]
         public async Task<ActionResult<Promoteur>> Post([FromBody] Promoteur promoteur)
         {
+            var promoteurExist = from p in _context.Promoteurs
+                                 where p.Contact == promoteur.Contact || p.Mail == promoteur.Mail
+                                 select new { p.Id, p.Nom, p.Contact, p.Mail, p.Photo };
+
+            if (promoteurExist.Count() > 0)
+            {
+                return Conflict("Les informations existent déja !");
+            }
+
             await _context.Promoteurs.AddAsync(promoteur);
             await _context.SaveChangesAsync();
 
@@ -64,9 +73,19 @@ namespace apiTckets.Controllers
                 return NotFound();
             }
 
+            var promoteurExist = from p in _context.Promoteurs
+                                 where p.Id != id && (p.Contact == promoteur.Contact || p.Mail == promoteur.Mail)
+                                 select new { p.Id, p.Nom, p.Contact, p.Mail, p.Photo };
+
+            if (promoteurExist.Count() > 0)
+            {
+                return Conflict("Les informations existent déja !");
+            }
+
             findPromoteur.Nom = promoteur.Nom;
             findPromoteur.Mail = promoteur.Mail;
             findPromoteur.Contact = promoteur.Contact;
+            findPromoteur.UpdateAt = DateTime.Now;
 
             await _context.SaveChangesAsync();
 
@@ -74,9 +93,19 @@ namespace apiTckets.Controllers
         }
 
         // DELETE api/<PromoteursController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpGet("delete/{id}")]
+        public async Task<ActionResult<string>> Delete(int id)
         {
+            var findPromoteur = await _context.Promoteurs.FindAsync(id);
+
+            if (findPromoteur == null)
+            {
+                return NotFound();
+            }
+
+            _context.Remove(findPromoteur);
+
+            return Ok("Suppression éffectuée");
         }
     }
 }

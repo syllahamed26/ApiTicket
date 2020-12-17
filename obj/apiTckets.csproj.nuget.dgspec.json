@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\API\\ASP.NET\\apiTckets\\apiTckets\\apiTckets.csproj": {}
+    "D:\\API\\ASP.NET Core\\apiTckets\\apiTckets\\apiTckets.csproj": {}
   },
   "projects": {
-    "D:\\API\\ASP.NET\\apiTckets\\apiTckets\\apiTckets.csproj": {
+    "D:\\API\\ASP.NET Core\\apiTckets\\apiTckets\\apiTckets.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\API\\ASP.NET\\apiTckets\\apiTckets\\apiTckets.csproj",
+        "projectUniqueName": "D:\\API\\ASP.NET Core\\apiTckets\\apiTckets\\apiTckets.csproj",
         "projectName": "apiTckets",
-        "projectPath": "D:\\API\\ASP.NET\\apiTckets\\apiTckets\\apiTckets.csproj",
+        "projectPath": "D:\\API\\ASP.NET Core\\apiTckets\\apiTckets\\apiTckets.csproj",
         "packagesPath": "C:\\Users\\Hamed SYLLA\\.nuget\\packages\\",
-        "outputPath": "D:\\API\\ASP.NET\\apiTckets\\apiTckets\\obj\\",
+        "outputPath": "D:\\API\\ASP.NET Core\\apiTckets\\apiTckets\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Hamed SYLLA\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -54,7 +54,7 @@
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[5.6.3, )"
+              "version": "[5.5.0, )"
             }
           },
           "imports": [
