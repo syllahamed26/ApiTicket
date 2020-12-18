@@ -1,5 +1,6 @@
 ﻿using apiTckets.Entities;
 using apiTckets.Entities.Models;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -36,9 +37,25 @@ namespace apiTckets.Functions
         private static Random random = new Random();
         public static string RandomString(int length)
         {
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             return new string(Enumerable.Repeat(chars, length)
               .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
+        public static string GenererCodeQr(DbSet<UserTicket> achat)
+        {
+            string codeQr = DateTime.Now.ToString("ddMMyy") + "-"+ RandomString(16);
+
+            var verifCodeQr = from a in achat
+                              where a.CodeQr == codeQr
+                              select new { a.Id, a.UserId, a.TicketId };
+
+            if (verifCodeQr.Count() > 0)
+            {
+                GenererCodeQr(achat);
+            }
+
+            return codeQr;
         }
     }
 }

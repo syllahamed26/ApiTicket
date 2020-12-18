@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,8 +18,10 @@ namespace apiTckets.Entities.Models
         public string CodeEvent { get; set; }
         public string Statut { get; set; }
 
+        [Required]
         public int TypeId { get; set; }
         public TypeEvent Type { get; set; }
+        [Required]
         public int PromoteurId { get; set; }
         public Promoteur Promoteur { get; set; }
     }

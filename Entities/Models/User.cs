@@ -10,9 +10,12 @@ namespace apiTckets.Entities.Models
     [Table("Users")]
     public class User : BaseModel
     {
+        [Required]
         public string Nom { get; set; }
+        [Required]
         public string Contact { get; set; }
         [EmailAddress]
+        [Required]
         public string Mail { get; set; }
         public string Image { get; set; }
         public List<UserTicket> UserTickets { get; set; }

@@ -48,6 +48,13 @@ namespace apiTckets.Controllers
         [HttpPost]
         public async Task<ActionResult<Event>> Post([FromBody] Event events)
         {
+            var findPromoteur = await _context.Promoteurs.FindAsync(events.PromoteurId);
+            var findType = await _context.TypeEvents.FindAsync(events.TypeId);
+            if (findPromoteur==null || findType==null)
+            {
+                return NotFound("Le promoteur et le type n'existe pas");
+            }
+
             var EventExist = from e in _context.Events
                              where e.Nom == events.Nom
                              select new { e.Id, e.Nom };
@@ -106,6 +113,7 @@ namespace apiTckets.Controllers
 
             _context.Remove(findEvent);
             await _context.SaveChangesAsync();
+
             return Ok("Suppression éffectuée");
         }
 
