@@ -17,7 +17,10 @@ namespace apiTckets.Entities.Models
         [EmailAddress,Required]
         public string Mail { get; set; }
         public string Photo { get; set; }
-
+        [Required]
+        public string Login { get; set; }
+        [Required]
+        public string Pwd { get; set; }
         public List<Event> Events { get; set; }
     }
 }

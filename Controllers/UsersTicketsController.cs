@@ -57,7 +57,25 @@ namespace apiTckets.Controllers
             await _context.UsersTickets.AddAsync(achat);
             await _context.SaveChangesAsync();
 
-            return Ok(achat);
+            var Lastachat = from a in _context.UsersTickets
+                            join t in _context.Tickets on a.TicketId equals t.Id
+                            join u in _context.Users on a.UserId equals u.Id
+                            where a.Id == achat.Id
+                            select new
+                            {
+                                a.Id,
+                                a.UserId,
+                                a.TicketId,
+                                u.Nom,
+                                u.Contact,
+                                u.Mail,
+                                t.Montant,
+                                t.Type,
+                                a.CodeQr,
+                                a.CreatedAt
+                            };
+
+            return Ok(Lastachat);
         }
 
         // PUT api/<UsersTicketsController>/5

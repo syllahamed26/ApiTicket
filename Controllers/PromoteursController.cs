@@ -92,6 +92,28 @@ namespace apiTckets.Controllers
             return Ok(findPromoteur);
         }
 
+        [HttpPost("login")]
+        public async Task<ActionResult<Promoteur>> Login([FromBody] string login, string pwd)
+        {
+            var searchPromoteur = from p in _context.Promoteurs
+                                  where p.Login == login && p.Pwd == pwd
+                                  select new
+                                  {
+                                      p.Id,
+                                      p.Login,
+                                      p.Nom,
+                                      p.Contact,
+                                      p.Mail,
+                                      p.Photo
+                                  };
+            if (searchPromoteur.Count() > 0)
+            {
+                return NotFound("Utilisateur introuvable");
+            }
+
+            return Ok(searchPromoteur);
+        }
+
         // DELETE api/<PromoteursController>/5
         [HttpGet("delete/{id}")]
         public async Task<ActionResult<string>> Delete(int id)
